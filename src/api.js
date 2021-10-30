@@ -182,7 +182,7 @@ const api = {
 
 		if (!(await this.pingDevice())) {
 			const error = `HDMI Matrix is not responsive at IP ${this.config.ip}`
-			if (this.currentState !==this.STATUS_ERROR && this.currentStatusMessage !== error) {
+			if (this.currentState !== this.STATUS_ERROR && this.currentStatusMessage !== error) {
 				this.log('error', error)
 				this.status(this.STATUS_ERROR, error)
 			}

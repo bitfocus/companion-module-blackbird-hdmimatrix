@@ -44,7 +44,7 @@ class HdmiMatrixInstance extends instance_skel {
 			this.initVariables()
 			this.initFeedbacks()
 			this.initPresets()
-	
+
 			this.status(this.STATUS_UNKNOWN, 'Connecting')
 			this.startQueue()
 		} else {

@@ -67,7 +67,7 @@ module.exports = {
 			} else {
 				this.setVariable(name, value)
 			}
-			
+
 			if (typeof variable.checkFeedback === 'function') {
 				variable.checkFeedback()
 			}
