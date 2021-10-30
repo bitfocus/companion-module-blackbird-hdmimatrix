@@ -6,8 +6,10 @@ const constants = require('./constants')
 const presets = require('./presets')
 const variables = require('./variables')
 const feedbacks = require('./feedbacks')
+const api = require('./api')
+const models = require('./models')
 
-class MixEffectInstance extends instance_skel {
+class HdmiMatrixInstance extends instance_skel {
 	constructor(system, id, config) {
 		super(system, id, config)
 
@@ -18,38 +20,48 @@ class MixEffectInstance extends instance_skel {
 			...presets,
 			...variables,
 			...feedbacks,
+			...api,
 		})
 
 		this.config = config
 
 		// instance state store
-		this.store = {
-			someState: 'default state',
+		this.state = {
+			queue: null,
+			retry: null,
+			skip: 0,
+			variables: {},
 		}
+
+		this.initConstants()
 	}
 
 	init() {
-		this.initConstants()
-		this.initActions()
-		this.initPresets()
-		this.initFeedbacks()
-		this.initVariables()
+		this.state.model = models.filter(({ modelNo }) => modelNo === this.config.modelNo)[0]
 
-		this.status(this.STATUS_OK)
+		if (this.state.model) {
+			this.initActions()
+			this.initVariables()
+			this.initFeedbacks()
+			this.initPresets()
+	
+			this.status(this.STATUS_UNKNOWN, 'Connecting')
+			this.startQueue()
+		} else {
+			this.status(this.STATUS_ERROR, `Model No. ${this.config.modelNo} not found`)
+		}
 	}
 
 	updateConfig(config) {
+		this.stopQueue()
+
 		this.config = config
-
-		// reinitialize actions/presets/feedbacks if necessary
-		// this.initActions()
-		// this.initPresets()
-		// this.initFeedbacks()
-
-		this.status(this.STATUS_OK)
+		this.init()
 	}
 
-	destroy() {}
+	destroy() {
+		this.stopQueue()
+	}
 }
 
-module.exports = MixEffectInstance
+module.exports = HdmiMatrixInstance

@@ -1,8 +1,7 @@
 module.exports = {
-	/**
-	 * Replace with your instance wide constants
-	 */
 	initConstants() {
-		this.defineConst('SAMPLE_CONSTANT', 'Some Constant Value')
+		this.defineConst('INTERVAL_MIN', 1000)
+		this.defineConst('INTERVAL_DEFAULT', 1000)
+		this.defineConst('INTERVAL_MAX', 5000)
 	},
 }

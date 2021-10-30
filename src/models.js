@@ -1,0 +1,30 @@
+const model39665 = {
+	modelNo: '39665',
+	description: 'Blackbird™ HDMI Matrix 8x8 4K 60Hz HDR',
+	videoInputs: 8,
+	videoOutputs: 8,
+	audioOutputs: 8,
+	edidModes: {
+		1: { description: '720p, Stereo Audio 2.0' },
+		2: { description: '1080p, Stereo Audio 2.0' },
+		3: { description: '1080p, Dolby/DTS 5.1' },
+		4: { description: '1080p, HD Audio 7.1' },
+		5: { description: '1080i, Stereo Audio 2.0' },
+		6: { description: '1080i, Dolby/DTS 5.1' },
+		7: { description: '1080i, HD Audio 7.1' },
+		8: { description: '3D, Stereo Audio 2.0' },
+		9: { description: '3D, Dolby/DTS 5.1' },
+		10: { description: '3D, HD Audio 7.1' },
+		11: { description: '4K2K30_444, Stereo Audio 2.0' },
+		12: { description: '4K2K30_444, Dolby/DTS 5.1' },
+		13: { description: '4K2K30_444, HD Audio 7.1' },
+		14: { description: '4K2K60_420, Stereo Audio 2.0' },
+		15: { description: '4K2K60_420, Dolby/DTS 5.1' },
+		16: { description: '4K2K60_420, HD Audio 7.1' },
+		17: { description: '4K2K60_444, Stereo Audio 2.0' },
+		18: { description: '4K2K60_444, Dolby/DTS 5.1' },
+		19: { description: '4K2K60_444, HD Audio 7.1' },
+	},
+}
+
+module.exports = [model39665]

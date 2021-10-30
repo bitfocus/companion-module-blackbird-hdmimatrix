@@ -2,36 +2,115 @@ const { arrayOf } = require('./utils')
 
 module.exports = {
 	initFeedbacks() {
-		/**
-		 * Replace with your feedbacks
-		 * see https://github.com/bitfocus/companion/wiki/Feedback
-		 * use this.checkFeedbacks('sampleFeedback') to recheck the specified feedback
-		 */
 		const feedbacks = {}
+		const outputPorts = arrayOf(this.state.model.videoOutputs, 1).map((index) => ({
+			id: index,
+			label: `Output ${String.fromCharCode(index + 64)}`,
+		}))
+		const inputPorts = arrayOf(this.state.model.videoInputs, 1).map((index) => ({ id: index, label: `Input ${index}` }))
 
-		feedbacks.sampleFeedback = {
+		feedbacks.selectedOutput = {
 			type: 'boolean',
-			label: 'Brief description of the Sample Feedback',
-			description: 'Longer description of the Sample Feedback',
+			label: 'Selected Output',
+			description: 'Set color based on Selected Output',
 			style: {
-				color: self.rgb(0, 0, 0),
-				bgcolor: self.rgb(255, 0, 0),
+				color: this.rgb(0, 0, 0),
+				bgcolor: this.rgb(255, 0, 0),
 			},
 			options: [
 				{
-					type: 'text',
-					label: 'Some Value',
-					id: 'someValue',
-					default: 'Some other state',
+					type: 'dropdown',
+					label: 'Output Port',
+					id: 'selectedOutput',
+					choices: outputPorts,
+					default: 1,
 				},
 			],
-			callback: function (feedback) {
-				// This callback will be called whenever companion wants to check if this feedback is 'active' and should affect the button style
-				if (this.store.sampleState == options.someValue) {
-					return true
-				} else {
-					return false
-				}
+			callback: ({ options }) => {
+				return this.state.variables.selectedOutput.value === options.selectedOutput
+			},
+		}
+
+		feedbacks.outputSetting = {
+			type: 'boolean',
+			label: 'Output Port Setting',
+			description: 'Set color based on current Output setting',
+			style: {
+				color: this.rgb(0, 0, 0),
+				bgcolor: this.rgb(255, 0, 0),
+			},
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Output Port',
+					id: 'outputPort',
+					choices: [...outputPorts, { id: 0, label: 'Selected Output' }],
+					default: 1,
+				},
+				{
+					type: 'dropdown',
+					label: 'Input Port',
+					id: 'inputPort',
+					choices: inputPorts,
+					default: 1,
+				},
+			],
+			callback: ({ options: { inputPort, outputPort } }) => {
+				const selectedOutputPort = outputPort === 0 ? this.state.variables.selectedOutput.value : outputPort
+				const outputVariable = `output${String.fromCharCode(selectedOutputPort + 64)}`
+				return this.state.variables[outputVariable].value === inputPort
+			},
+		}
+
+		feedbacks.beep = {
+			type: 'boolean',
+			label: 'Beep Status',
+			description: 'Set color based on beep status',
+			style: {
+				color: this.rgb(0, 0, 0),
+				bgcolor: this.rgb(255, 0, 0),
+			},
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Beep Status',
+					id: 'beep',
+					choices: [
+						{ id: 1, label: 'On' },
+						{ id: 0, label: 'Off' },
+					],
+					default: 1,
+				},
+			],
+			callback: ({ options }) => {
+				const feedback = options.beep === 1
+				return this.state.variables.beep.value === feedback
+			},
+		}
+
+		feedbacks.power = {
+			type: 'boolean',
+			label: 'Power Status',
+			description: 'Set color based on power status',
+			style: {
+				color: this.rgb(0, 0, 0),
+				bgcolor: this.rgb(255, 0, 0),
+			},
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Power Status',
+					id: 'power',
+					choices: [
+						{ id: 1, label: 'On' },
+						{ id: 0, label: 'Off' },
+					],
+					default: 1,
+				},
+			],
+			callback: ({ options }) => {
+				const feedback = options.power === 1
+				return this.state.variables.power.value === feedback
 			},
 		}
 
