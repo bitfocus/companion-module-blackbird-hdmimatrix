@@ -1,2 +1,10 @@
-package.json
-/LICENSE.md
+# Ignore artifacts:
+build
+coverage
+
+# Ignore all HTML files:
+*.html
+
+# Ignore package related files:
+#package.json
+yarn.lock
