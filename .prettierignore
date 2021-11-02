@@ -1,10 +1,6 @@
-# Ignore artifacts:
-build
-coverage
-
-# Ignore all HTML files:
-*.html
+# dependencies
+node_modules
 
 # Ignore package related files:
-#package.json
+package.json
 yarn.lock
