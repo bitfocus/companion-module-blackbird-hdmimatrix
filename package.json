@@ -1,27 +1,32 @@
 {
-	"name": "blackbird-hdmimatrix",
-	"version": "1.0.0",
-	"description": "Backbird HDMI Matrix module for Companion",
-	"manufacturer": "Blackbird",
-	"product": [
-		"HDMI Matrix"
-	],
-	"shortname": "hdmimatrix",
-	"main": "src/index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"prettier": "prettier"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/estilles/companion-module-blackbird-hdmimatrix.git"
-	},
-	"keywords": [
-		"keyword"
-	],
-	"author": "JohnnyEstilles <johnny@estilles.com>",
-	"license": "MIT",
-	"dependencies": {
-		"needle": "^3.0.0"
-	}
+  "name": "blackbird-hdmimatrix",
+  "version": "0.0.0-development",
+  "description": "Backbird HDMI Matrix module for Companion",
+  "manufacturer": "Blackbird",
+  "product": [
+    "HDMI Matrix"
+  ],
+  "shortname": "hdmimatrix",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/estilles/companion-module-blackbird-hdmimatrix.git"
+  },
+  "keywords": [
+    "keyword"
+  ],
+  "author": "JohnnyEstilles <johnny@estilles.com>",
+  "license": "MIT",
+  "dependencies": {
+    "needle": "^3.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1",
+    "semantic-release": "^18.0.0"
+  }
 }
