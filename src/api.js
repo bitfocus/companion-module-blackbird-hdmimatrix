@@ -17,7 +17,7 @@ const BEEP_OFF = 0xf0
 // Power
 const CMD_SET_POWER = [0x08, 0x0b]
 const CMD_QUERY_POWER = [0x08, 0x0c]
-const CMD_REBOOT = [0x08, 0x0d] // TODO
+// const CMD_REBOOT = [0x08, 0x0d] // TODO
 const POWER_ON = 0x0f
 const POWER_OFF = 0xf0
 
@@ -26,10 +26,10 @@ const CMD_CHANGE_PORT = [0x02, 0x03]
 const CMD_QUERY_ALL_PORTS = [0x02, 0x11]
 
 // EDID
-const CMD_SET_EDID = [0x03, 0x02] // TOD0
-const CMD_SET_EDID_TO_ALL = [0x03, 0x01] // TODO
-const CMD_COPY_EDID = [0x03, 0x04] // TOD0
-const CMD_COPY_EDID_TO_ALL = [0x03, 0x03] // TOD0
+// const CMD_SET_EDID = [0x03, 0x02] // TOD0
+// const CMD_SET_EDID_TO_ALL = [0x03, 0x01] // TODO
+// const CMD_COPY_EDID = [0x03, 0x04] // TOD0
+// const CMD_COPY_EDID_TO_ALL = [0x03, 0x03] // TOD0
 
 // Used in calculating checksums.
 const CHECKSUM_BASE = 0x100
