@@ -10,6 +10,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint",
     "prettier": "prettier",
     "semantic-release": "semantic-release"
   },
