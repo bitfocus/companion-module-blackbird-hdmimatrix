@@ -9,6 +9,30 @@ module.exports = {
 		}))
 		const inputPorts = arrayOf(this.state.model.videoInputs, 1).map((index) => ({ id: index, label: `Input ${index}` }))
 
+		actions.setPort = {
+			label: 'Set Port',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Output Port',
+					id: 'outputPort',
+					choices: [...outputPorts, { id: 0, label: 'Selected Output' }],
+					default: 1,
+				},
+				{
+					type: 'dropdown',
+					label: 'Input Port',
+					id: 'inputPort',
+					choices: inputPorts,
+					default: 1,
+				},
+			],
+			callback: ({ options: { inputPort, outputPort } }) => {
+				const selectedOutput = outputPort === 0 ? this.state.variables.selectedOutput.value : outputPort
+				this.setPort(inputPort, selectedOutput)
+			},
+		}
+
 		actions.selectOutput = {
 			label: 'Select Output',
 			options: [
@@ -61,30 +85,6 @@ module.exports = {
 			],
 			callback: ({ options }) => {
 				this.setPower(options.power === 1)
-			},
-		}
-
-		actions.setPort = {
-			label: 'Set Port',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Output Port',
-					id: 'outputPort',
-					choices: [...outputPorts, { id: 0, label: 'Selected Output' }],
-					default: 1,
-				},
-				{
-					type: 'dropdown',
-					label: 'Input Port',
-					id: 'inputPort',
-					choices: inputPorts,
-					default: 1,
-				},
-			],
-			callback: ({ options: { inputPort, outputPort } }) => {
-				const selectedOutput = outputPort === 0 ? this.state.variables.selectedOutput.value : outputPort
-				this.setPort(inputPort, selectedOutput)
 			},
 		}
 
