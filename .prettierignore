@@ -4,3 +4,6 @@ node_modules
 # Ignore package related files:
 package.json
 yarn.lock
+
+# Docs
+CHANGELOG.md
