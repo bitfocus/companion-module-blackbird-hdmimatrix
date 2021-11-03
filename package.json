@@ -1,6 +1,6 @@
 {
   "name": "blackbird-hdmimatrix",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Backbird HDMI Matrix module for Companion",
   "manufacturer": "Blackbird",
   "product": [
