@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/bitfocus/companion-module-blackbird-hdmimatrix/compare/v1.0.0...v1.0.1) (2021-11-08)
+
+
+### Bug Fixes
+
+* **instance:** refactor and gracefully handle exceptions ([854db35](https://github.com/bitfocus/companion-module-blackbird-hdmimatrix/commit/854db35af81be4149648b095409ef379fd5a2b9b))
+
 # 1.0.0 (2021-11-03)
 
 
