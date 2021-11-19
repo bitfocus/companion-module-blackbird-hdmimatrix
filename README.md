@@ -10,8 +10,8 @@ Has only been tested with the following models. Although it may work with other 
 - Blackbird™ HDMI Matrix 8x8 4K 60HZ HDR P/N 24180
 - Blackbird™ HDMI Matrix 8x8 4K 60HZ HDR P/N 39665
 
-You can find sample a Companion configuration file <a id="raw-url" href="https://raw.githubusercontent.com/bitfocus/companion-module-blackbird-hdmimatrix/main/sample-configs/blackbird-hdmimatrix-sample-config.companionconfig" download>here</a>.
+You can find sample a Companion configuration file [here](https://estill.es/companion-blackbird-hdmimatrix-config).
 
-![Sample Configuration File](assets/blackbird-hdmimatrix-sample-config.png)
+![Sample Configuration File](assets/blackbird-hdmimatrix-sample-config-v2.png)
 
 See [HELP.md](./HELP.md) and [LICENSE](./LICENSE)
