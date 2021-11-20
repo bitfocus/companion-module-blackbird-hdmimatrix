@@ -27,13 +27,12 @@ class HdmiMatrixInstance extends instance_skel {
 
 		this.state = {
 			queue: null,
-			retry: null,
 			skip: 0,
 			variables: {},
 		}
 
 		this.queue = []
-		this.queueRunning = false
+		this.runQueue = false
 
 		this.initConstants()
 	}
@@ -57,128 +56,79 @@ class HdmiMatrixInstance extends instance_skel {
 
 		this.state.model = models.filter(({ modelNo }) => modelNo === this.config.modelNo)[0]
 
+		if (this.state.model === undefined) {
+			this.log('error', `Model No. ${this.config.modelNo} not found`)
+			this.status(this.STATUS_UNKNOWN, 'Check Configuration')
+			return
+		}
+
 		this.status(this.STATUS_UNKNOWN, 'Conecting...')
 
-		if (this.state.model && (await this.pingDevice())) {
+		if (await this.pingDevice({ retries: 5, timeout: 500 })) {
 			this.initActions()
 			this.initVariables()
 			this.initFeedbacks()
 			this.initPresets()
-			this.startQueue()
+
+			this.status(this.STATUS_OK)
+
+			this.runQueue = true
+			this.processQueue()
 			return
 		}
 
-		this.logError('error', `Model No. ${this.config.modelNo} not found`)
+		this.log('error', `Unable to connect to matrix via IP ${this.config.ip}`)
+		this.status(this.STATUS_ERROR)
 	}
 
-	async startQueue() {
-		this.queueRunning = false
+	async processQueue() {
+		this.state.timeout = null
 
-		if (this.config.ip === undefined) {
-			this.status(this.STATUS_UNKNOWN, 'Missing Config')
-			return
+		if (this.queue.length === 0) {
+			this.addCommand({ cmd: this.CMD_QUERY_ALL_PORTS })
+			this.addCommand({ cmd: this.CMD_QUERY_BEEP })
+			this.addCommand({ cmd: this.CMD_QUERY_POWER })
 		}
 
-		if (this.state.queue) {
-			this.log('debug', 'Polling queue already started')
-			return
-		}
+		const { cmd, arg1, arg2, queryCmd } = this.nextCommand()
 
-		this.stopRetry()
+		try {
+			await this.sendCommand({ path: this.URL_SUBMIT, cmd: this.generateCommand(cmd, arg1, arg2) })
+			await this.sleep(this.PAUSE_TIME)
 
-		if (!(await this.pingDevice())) {
-			const error = `HDMI Matrix is not responsive at IP ${this.config.ip}`
-
-			if (this.currentState !== this.STATUS_ERROR && this.currentStatusMessage !== error) {
-				this.logError(error)
-			}
-
-			this.startRetry()
-
-			return
-		}
-
-		this.status(this.STATUS_OK)
-
-		this.state.queue = setInterval(async () => {
-			if (this.queueRunning) {
-				return this.restartQueue()
-			}
-			if (this.queue.length === 0) {
-				this.addCommand({ cmd: this.CMD_QUERY_ALL_PORTS })
-				this.addCommand({ cmd: this.CMD_QUERY_BEEP })
-				this.addCommand({ cmd: this.CMD_QUERY_POWER })
-			}
-
-			const { cmd, arg1, arg2, queryCmd } = this.nextCommand()
-
-			if (cmd === undefined) {
-				this.log('debug', 'Ignoring undefined command')
-				return
-			}
-
-			this.queueRunning = true
-
-			try {
-				await this.sendCommand({ path: this.URL_SUBMIT, cmd: this.generateCommand(cmd, arg1, arg2) })
+			if (queryCmd) {
+				await this.sendCommand({ path: this.URL_SUBMIT, cmd: this.generateCommand(queryCmd) })
 				await this.sleep(this.PAUSE_TIME)
-
-				if (queryCmd) {
-					await this.sendCommand({ path: this.URL_SUBMIT, cmd: this.generateCommand(queryCmd) })
-					await this.sleep(this.PAUSE_TIME)
-				}
-
-				const response = await this.sendCommand({ path: this.URL_QUERY })
-
-				this.parseData(this.verifyResponse(response))
-			} catch (error) {
-				this.logError(error)
-				this.stopQueue()
 			}
 
-			this.queueRunning = false
-		}, this.config.interval)
-	}
+			const response = await this.sendCommand({ path: this.URL_QUERY }).then(({ body }) => body)
+
+			const data = this.verifyResponse(response)
+			this.parseData(data)
+		} catch (error) {
+			this.log('warn', `${error}`)
+		}
+
+		if (this.runQueue) {
+			this.state.timeout = setTimeout(() => {
+				this.processQueue()
+			}, this.config.interval)
+		}
+}
 
 	async restartQueue() {
 		this.stopQueue()
 		await this.sleep(this.PAUSE_TIME)
-		this.startQueue()
+		this.processQueue()
 	}
 
 	stopQueue() {
-		this.queueRunning = false
+		this.runQueue = false
 
-		if (this.state.queue) {
-			clearInterval(this.state.queue)
-			this.state.queue = null
+		if (this.state.timeout) {
+			clearTimeout(this.state.timeout)
+			this.state.timeout = null
 		}
-
-		this.stopRetry()
-	}
-
-	startRetry() {
-		if (this.state.retry) {
-			this.log('debug', `Attempting to retry, while another retry is ongoing. Bailing ...`)
-			return
-		}
-
-		this.state.retry = setTimeout(() => {
-			this.log('debug', `Attempting to reconnect to IP ${this.config.ip}`)
-			this.startQueue()
-		}, 10000)
-	}
-
-	stopRetry() {
-		if (this.state.retry) {
-			clearTimeout(this.state.retry)
-			this.state.retry = null
-		}
-	}
-
-	logError(message) {
-		this.log('error', message)
-		this.status(this.STATUS_ERROR, message)
 	}
 
 	destroy() {

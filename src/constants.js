@@ -8,6 +8,7 @@ module.exports = {
 		this.defineConst('URL_BASE', '/cgi-bin')
 		this.defineConst('URL_QUERY', '/query')
 		this.defineConst('URL_SUBMIT', '/submit')
+
 		this.defineConst('PAUSE_TIME', 100)
 
 		this.defineConst('CMD_SET_BEEP', [0x06, 0x01])
