@@ -114,7 +114,7 @@ class HdmiMatrixInstance extends instance_skel {
 				this.processQueue()
 			}, this.config.interval)
 		}
-}
+	}
 
 	async restartQueue() {
 		this.stopQueue()
