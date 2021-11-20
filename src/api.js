@@ -1,4 +1,4 @@
-const needle = require('needle')
+const got = require('got')
 
 // Command constants
 const CMD_HEADER = [0xa5, 0x5b]
@@ -94,7 +94,7 @@ const api = {
 		}
 	},
 
-	async sendCommand({ path, cmd, method = 'get', timeout = 2000 }) {
+	sendCommand({ path, cmd, method = 'GET', timeout = 500 }) {
 		const query = new URLSearchParams()
 
 		if (cmd) {
@@ -104,21 +104,18 @@ const api = {
 
 		const url = `${this.URL_PROTOCOL}${this.config.ip}${this.URL_BASE}${path}?${query}`
 
-		this.debug({ url })
-
-		return await needle(method, url, { open_timeout: timeout, response_timeout: timeout }).then((res) => {
-			return res.body
-		})
+		return got(url, { method, timeout })
 	},
 
-	async pingDevice() {
+	async pingDevice({ retries, timeout }) {
 		if (this.config.ip) {
-			try {
-				await this.sendCommand({ path: this.URL_QUERY, method: 'head', timeout: 500 })
-				return true
-			} catch (error) {
-				this.log('debug', `pingDevice: ${error}`)
-				return false
+			for (let attempt = 1; attempt <= retries; attempt++) {
+				try {
+					await this.sendCommand({ path: this.URL_QUERY, method: 'HEAD', timeout })
+					return true
+				} catch (error) {
+					this.log('warn', `${error} (attempt ${attempt} of ${retries})`)
+				}
 			}
 		}
 		return false
