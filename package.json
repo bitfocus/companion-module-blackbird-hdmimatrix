@@ -1,36 +1,41 @@
 {
-  "name": "blackbird-hdmimatrix",
-  "version": "1.0.2",
-  "description": "Backbird HDMI Matrix module for Companion",
-  "manufacturer": "Blackbird",
-  "product": [
-    "HDMI Matrix"
-  ],
-  "shortname": "hdmimatrix",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint",
-    "prettier": "prettier",
-    "semantic-release": "semantic-release"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bitfocus/companion-module-blackbird-hdmimatrix.git"
-  },
-  "keywords": [
-    "keyword"
-  ],
-  "author": "JohnnyEstilles <johnny@estilles.com>",
-  "license": "MIT",
-  "dependencies": {
-    "got": "^11.8.3"
-  },
-  "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "eslint": "^8.1.0",
-    "prettier": "^2.4.1",
-    "semantic-release": "^18.0.0"
-  }
+	"name": "blackbird-hdmimatrix",
+	"version": "1.0.2",
+	"description": "Backbird HDMI Matrix module for Companion",
+	"manufacturer": "Blackbird",
+	"product": [
+		"HDMI Matrix"
+	],
+	"shortname": "hdmimatrix",
+	"main": "src/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"eslint": "eslint",
+		"prettier": "prettier",
+		"semantic-release": "semantic-release"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-blackbird-hdmimatrix.git"
+	},
+	"keywords": [
+		"keyword"
+	],
+	"author": "JohnnyEstilles <johnny@estilles.com>",
+	"license": "MIT",
+	"dependencies": {
+		"got": "^11.8.3"
+	},
+	"devDependencies": {
+		"@semantic-release/changelog": "^6.0.1",
+		"@semantic-release/git": "^10.0.1",
+		"eslint": "^8.1.0",
+		"prettier": "^2.4.1",
+		"semantic-release": "^18.0.0"
+	},
+	"homepage": "https://github.com/bitfocus/companion-module-blackbird-hdmimatrix#readme",
+	"bugs": {
+		"url": "https://github.com/bitfocus/companion-module-blackbird-hdmimatrix/issues"
+	},
+	"api_version": "1.0.0"
 }
