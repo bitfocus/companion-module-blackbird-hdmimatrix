@@ -24,7 +24,7 @@
 	"author": "JohnnyEstilles <johnny@estilles.com>",
 	"license": "MIT",
 	"dependencies": {
-		"got": "^11.8.3"
+		"got": "^11.8.5"
 	},
 	"devDependencies": {
 		"@semantic-release/changelog": "^6.0.1",
